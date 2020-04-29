@@ -1,10 +1,23 @@
 version: "3.7"
 
 volumes:
-  postgis:
+  postgres:
 
 services:
+  database:
+    container_name: database
+    build:
+      postgres/
+    ports:
+      - 5431:5432
+    volumes:
+      - postgres:/var/lib/data/postgresql
+    restart: on-failure
+
   spyer:
+    depends_on:
+      - database
+    container_name: spyer
     build:
       .
     ports:
