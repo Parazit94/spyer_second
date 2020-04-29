@@ -1,0 +1,15 @@
+version: "3.7"
+
+volumes:
+  postgis:
+
+services:
+  spyer:
+    build:
+      .
+    ports:
+      - $SPYER_DEBUG_PORT:$SPYER_DEBUG_PORT
+      - 8000:8000
+    environment:
+      SPYER_OPTS: $SPYER_OPTS
+    restart: on-failure
