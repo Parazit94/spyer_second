@@ -1,0 +1,64 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.0/ddl/users
+      author: Chernov O.N.
+      comment: A 'users_seq' and 'users' are created
+      changes:
+        - tagDatabase:
+            tag: snapshot/1.0.0
+
+        - createSequence:
+            sequenceName: users_seq
+            startValue: 1
+
+        - createTable:
+            remarks: 'Table stores users registered in spyer'
+            tableName: users
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: users_pk
+                  remarks: 'id is a primary key of the table, it relates to users_seq'
+                  name: id
+                  type: bigint
+                  defaultValueSequenceNext: users_seq
+              - column:
+                  remarks: 'The login of user'
+                  name: login
+                  type: varchar(255)
+                  constraints:
+                    - nullable: false
+                    - unique: true
+                    - uniqueConstraintName: spyer_users_login
+              - column:
+                  remarks: 'The email of user'
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    - nullable: false
+                    - unique: true
+                    - uniqueConstraintName: spyer_users_email
+              - column:
+                  remarks: 'The hash of password'
+                  name: pass
+                  type: varchar(255)
+                  constraints:
+                    - nullable: false
+              - column:
+                  remarks: 'created date'
+                  name: created
+                  type: timestamp(0)
+                  defaultValueDate: current_timestamp
+              - column:
+                  remarks: 'modified date'
+                  name: modified
+                  type: timestamp(0)
+                  defaultValueDate: current_timestamp
+              - column:
+                  remarks: 'A soft deleted flag: true - active, false - deleted'
+                  name: active
+                  type: boolean
+                  defaultValueDate: true
+                  constraints:
+                    - nullable: false

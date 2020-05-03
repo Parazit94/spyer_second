@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: ddl/users.yaml
+      relativeToChangelogFile: true
